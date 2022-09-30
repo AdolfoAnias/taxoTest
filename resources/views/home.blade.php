@@ -21,7 +21,7 @@
                                 <li><a href="#">Home</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-center">
-                                <li><a href="#">User Module</a></li>
+                                <li><a href="{{ route('users') }}">User Module</a></li>
                                 <li><a href="#">Mail Module</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
