@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use App\User;
+use App\Models\User;
 
 class PermissionTableSeeder extends Seeder
 {
@@ -30,20 +30,13 @@ class PermissionTableSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@taxo.com',
             'role_id' => 1,
+            'birth_date' => '1980-02-22',
+            'card_id' => '74122207346',
+            'city_id' => 1,
             'password' => bcrypt('secret')
         ]);        
         
         $user->assignRole('Admin');
-        
-        $user = User::create([
-            'name' => 'Creator',
-            'email' => 'creator@material.com',
-            'role_id' => 1,
-            'picture' => '../material/img/faces/avatar.jpg',
-            'password' => bcrypt('secret')
-        ]);        
-        
-        $user->assignRole('Creator');
         
     }
 }
