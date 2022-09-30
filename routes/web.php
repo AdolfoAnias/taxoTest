@@ -27,6 +27,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('moduleMails', 'MailsController@index')->name('moduleMails');
     
     Route::get('/users', [UserController::class, 'index'])->name('users');
-    //Route::get('/users', 'UserController@index')->name('users');
-    //Route::get('users', 'UserController@index')->name('users');    
   });

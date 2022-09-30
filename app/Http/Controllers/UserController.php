@@ -19,9 +19,8 @@ class UserController extends Controller
             $data = User::select('*');
             return Datatables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('action', function($row){ 
-                        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
-                        return $btn;
+                    ->addColumn('action', function($row){                         
+                        return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a href="#delete-'.$row->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Delete</a>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
