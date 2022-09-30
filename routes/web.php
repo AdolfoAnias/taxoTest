@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('moduleUsers', 'userController@index')->name('moduleUsers');
     Route::get('moduleMails', 'MailsController@index')->name('moduleMails');
     
-    Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+    //Route::get('/users', 'UserController@index')->name('users');
+    //Route::get('users', 'UserController@index')->name('users');    
   });
