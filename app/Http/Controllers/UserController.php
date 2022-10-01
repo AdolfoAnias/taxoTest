@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DataTables;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MySendMail;
+use Session;
+use Redirect;
 
 class UserController extends Controller
 {
@@ -27,6 +31,21 @@ class UserController extends Controller
         }       
 
         return view('users.index');
+    }
+
+    public function mail()
+    {
+        $authUser = auth()->user();
+        
+        $user = [
+            'name' => $authUser->name,
+            'email' => $authUser->email,
+        ];
+
+        Mail::to('test@gmail.com')->send(new MySendMail($user));
+
+        Session::flash('message', "Email has been sent");
+        return Redirect::back();        
     }
     
     /**

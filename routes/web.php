@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('mail', [UserController::class,'mail'])->name('mail');
+
     Route::get('moduleUsers', 'userController@index')->name('moduleUsers');
     Route::get('moduleMails', 'MailsController@index')->name('moduleMails');
     
     Route::get('/users', [UserController::class, 'index'])->name('users');
-  });
+    Route::get('/logout', [LoginController::class,'logout']);
+});
