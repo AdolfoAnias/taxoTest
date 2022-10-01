@@ -26,7 +26,7 @@ class User extends Authenticatable implements Auditable
         'password',
         'identifer',
         'mobile',
-        'birth_ate',
+        'birth_date',
         'card_id',
         'city_id',
         'role_id'

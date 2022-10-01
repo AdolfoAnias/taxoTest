@@ -24,7 +24,7 @@ class UserController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){                         
-                        return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a href="#delete-'.$row->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Delete</a>';
+                        return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a href="#delete-'.$row->id.'" onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -98,9 +98,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $user = User::findOrFail($request->get('id'));
+        $user->update(
+        [
+            'name' => $request->name,
+            'identifer' => $request->identifier,
+            'mobile' => $request->mobile,
+            'birth_date' => $request->birth_date,
+            
+        ]);                         
+
+        return Redirect::back();        
     }
 
     /**

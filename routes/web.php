@@ -25,6 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('mail', [UserController::class,'mail'])->name('mail');
+    
+    Route::post('edit', [UserController::class,'update'])->name('edit');
 
     Route::get('moduleUsers', 'userController@index')->name('moduleUsers');
     Route::get('moduleMails', 'MailsController@index')->name('moduleMails');
