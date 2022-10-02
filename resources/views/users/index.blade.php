@@ -175,23 +175,32 @@
        
         function deleteModal(id){            
             var id = $(this).data('id');
+            
             swal({
-                    title: "Are you sure to delete this user?",
-                    type: "error",
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Yes!",
-                    showCancelButton: true,
-                },
-                function() {
+                title: "Are you sure to delete this user?",
+                type: 'error',
+                showCancelButton: true,
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'btn btn-danger',
+                confirmButtonText: event.detail.btn_accept,
+                buttonsStyling: false
+              }).then(function(willDelete) {
+                  if (willDelete.value) {
                     $.ajax({
-                        type: "POST",
-                        url: "{{url('/delete/user/')}}",
+                        url:"{{ route('delete.user') }}",
+                        method: "POST",
                         data: {id:id},
-                        success: function (data) {
-                            location.reload();
-                        }         
-                    });
-            });            
+                        success: function(data) {
+                            console.log("Yes! It works");
+                        },
+                        error: function(data) {
+                            console.log("No! You are wrong!");
+                        }
+                    })                      
+                  
+                  } 
+                  location.reload();
+              });            
         };        
         
       $(function () {

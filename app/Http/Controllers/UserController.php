@@ -9,9 +9,17 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MySendMail;
 use Session;
 use Redirect;
+use App\Adapters\APIAdapters\WebAPI;
 
 class UserController extends Controller
 {
+    protected $api;
+    
+    public function __construct(WebAPI $api)
+    {
+        $this->api = $api;
+    }    
+    
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +32,7 @@ class UserController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){                         
-                        return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a href="#delete-'.$row->id.'" onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+                        return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -58,6 +66,18 @@ class UserController extends Controller
         //
     }
 
+    public function getUsersFromAPI(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $this->api->getUsers();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->make(true);
+        }       
+
+        return view('users.usersFromApi');      
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -119,8 +139,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $model = User::where('id','=', $request->id)->delete();
+        
+        return Redirect::back();        
     }
 }

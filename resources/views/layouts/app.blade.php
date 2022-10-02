@@ -53,9 +53,18 @@
                     <!-- Left Side Of Navbar -->
                     @if (auth()->check())
                         <ul class="navbar-nav me-auto">
-                            <li class="nav-item"><a href="{{ route('users') }}">User Module</a></li>
-                            <li class="nav-item"><a href="#">Mail Module</a></li>
-                            <li class="nav-item"><a href="{{ route('mail') }}">Send Mail</a></li>                        
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users') }}">User Module</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">Mail Module</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('mail') }}">Send Mail</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('usersFromApi') }}">Users From API</a>
+                            </li>
                         </ul>
                     @endif
 

@@ -27,10 +27,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('mail', [UserController::class,'mail'])->name('mail');
     
     Route::post('edit', [UserController::class,'update'])->name('edit');
+    Route::post('delete.user/', [UserController::class,'destroy'])->name('delete.user');
 
     Route::get('moduleUsers', 'userController@index')->name('moduleUsers');
     Route::get('moduleMails', 'MailsController@index')->name('moduleMails');
     
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::get('/logout', [LoginController::class,'logout']);
+    
+    Route::get('/usersFromApi', [UserController::class, 'getUsersFromAPI'])->name('usersFromApi');
 });

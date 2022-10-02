@@ -14,8 +14,8 @@ class WebAPI {
         $this->client = $client;
     }
    
-    public function getMails() {
-        $response = $this->client->get("api/auth/getMails")->getBody();
+    public function getUsers() {
+        $response = $this->client->get("users")->getBody();
         $data = json_decode($response);
         return $data;
     }
