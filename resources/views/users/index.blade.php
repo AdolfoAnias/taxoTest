@@ -109,7 +109,7 @@
                             <label for="birth_date" class="col-md-4 col-form-label text-md-end">{{ __('Birth Date') }}</label>
 
                             <div class="col-md-6">
-                                <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ old('birth_date') }}" required autocomplete="birth date" autofocus>
+                                <input id="birth_date" type="date" onchange="getAge(event);" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ old('birth_date') }}" required autocomplete="birth date" autofocus>
 
                                 @error('birth_date')
                                     <span class="invalid-feedback" role="alert">
@@ -143,7 +143,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button id="btnSubmit" type="submit" class="btn btn-primary">
                                     {{ __('Edit') }}
                                 </button>
                             </div>
@@ -157,7 +157,7 @@
 
     <script type="text/javascript">
         $('#userDatatable').on('click', '.edit', e => {
-            $("#userModal").modal('show');
+            $("#userModal").modal({backdrop: 'static', keyboard: false, show: true});
             
             let tr = $(e.target).closest('tr');
             
@@ -172,7 +172,27 @@
 //            $('#age').val($(tr).find('td:eq(7)').text());
   //          $('#city').val($(tr).find('td:eq(8)').text());            
         });              
-       
+
+        function getAge(e) {
+            var hoy = new Date();
+            var cumpleanos = new Date(e.target.value);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
+
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+            
+            if(edad < 18){
+                alert('No puede ser menor de edad');
+                document.getElementById('btnSubmit').disabled=true;
+                document.getElementById("birth_date").focus();
+            }else{
+                alert('Mayor de edad');
+                document.getElementById('btnSubmit').disabled=false;
+            }
+        }
+
         function deleteModal(id){            
             var id = $(this).data('id');
             

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -30,7 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('delete.user/', [UserController::class,'destroy'])->name('delete.user');
 
     Route::get('moduleUsers', 'userController@index')->name('moduleUsers');
-    Route::get('moduleMails', 'MailsController@index')->name('moduleMails');
+    Route::get('moduleMails', [EmailController::class, 'index'])->name('moduleMails');
     
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::get('/logout', [LoginController::class,'logout']);

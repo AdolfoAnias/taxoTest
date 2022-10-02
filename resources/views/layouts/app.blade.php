@@ -57,7 +57,7 @@
                                 <a class="nav-link" href="{{ route('users') }}">User Module</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">Mail Module</a>
+                                <a class="nav-link" href="{{ route('moduleMails') }}">Mail Module</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('mail') }}">Send Mail</a>
