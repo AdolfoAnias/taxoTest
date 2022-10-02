@@ -3,3 +3,7 @@
     left: 50%;
     transform: translatex(-50%);
 }
+
+.material-icons {
+   font-size: 12px !important;
+}

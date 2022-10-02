@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Email;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class MailComponent extends Component
 {
@@ -17,14 +18,9 @@ class MailComponent extends Component
     public $search_field = '';    
     public $onSearch = False;    
     
-    public $page = 1;    
-    
-    public $fields = ["ID","affiliate_id","payment_way_id","nameProduct","operator_id","status_reason_id","courier_id","full_name",
-        "phone","parsed_phone","valid_phone","ip","country_ip","country_id","currency_id","price","units","changed_status",
-        "confirmed_date","confirmedby_id","rejected_date","spam_date","call_counter","last_call_date","zip_code","address",
-        "building","apto","callback_date","comment","priority","doubles","payout","processed_times"];            
-   
-    public $mail_id, $name, $description, $full_name, $phone, $parsed_phone, $comment, $price, $units, $payout, $address, $building, $apto, $email, $default, $status, $modelId, $selectedItem;
+    public $page = 1;      
+  
+    public $mail_id, $subject, $recipient, $body, $status, $modelId, $selectedItem;
     public $excel;
    
     public $created_at, $updated_at;
@@ -36,16 +32,14 @@ class MailComponent extends Component
 
     protected $listeners = [
         'getModelId',
-        'filterByTag' => 'getLeadByStatus',
         'postDestroy' => 'refreshDatatable',
-        'arrayLeadChangeStatus' => 'changeStatus',
-        'hallChanged' => 'change',
-        'lead-remove'=> 'delete',
+        'mail-remove'=> 'delete',
     ];
     
     protected $rules =[
-        'full_name'=>'required|filled',        
-        'parsed_phone'=>'required|filled',        
+        'asunto'=>'required|filled',        
+        'destinatario'=>'required|filled',        
+        'body'=>'required|filled',        
     ];
 
    public function openRemoveModal($id) {
@@ -126,8 +120,7 @@ class MailComponent extends Component
             'destinatario' => $this->destinatario,
             'body' => $this->body,
             'user_id' => $this->user_id,
-        ];                
-        
+        ];                       
         
         $this->resetInputFields();
         $this->dispatchBrowserEvent('closeMailCreateModal', ['type' => 'success'  , 'message' => 'Mail Sent Succesufully!']);
@@ -139,8 +132,7 @@ class MailComponent extends Component
             'destinatario' => $this->destinatario,
             'body' => $this->body,
             'user_id' => $this->user_id,
-        ];         
-        
+        ];                 
         
         $this->resetInputFields();
         $this->dispatchBrowserEvent('closeMailEditModal', ['type' => 'success'  , 'message' => 'Mail Updated Succesufully !']);

@@ -18,6 +18,11 @@ class PermissionTableSeeder extends Seeder
     {   
         Permission::create(['name' => 'view_management_user', 'parent_id' => 0]);
         Permission::create(['name' => 'view_mails', 'parent_id' => 0]);
+        Permission::create(['name' => 'create_mail', 'parent_id' => 0]);
+        Permission::create(['name' => 'import_excel_mail', 'parent_id' => 0]);
+        Permission::create(['name' => 'export_excel_mail', 'parent_id' => 0]);
+        Permission::create(['name' => 'update_mail', 'parent_id' => 0]);
+        Permission::create(['name' => 'delete_mail', 'parent_id' => 0]);        
         
         $roleAdmin = Role::create(['name' => 'Admin','description' => 'This is the administration role']);
         $roleUser = Role::create(['name' => 'User','description' => 'This is the creator role']);

@@ -9,19 +9,19 @@
         <div class="card-header card-header-rose card-header-icon">
             @can('create_mail')  
                 <button wire:click="selectAction('0', 'create')" class="btn btn-danger btn-round" data-toggle="modal" data-target="#addRegion" data-backdrop="false" style="text-transform: uppercase">
-                    <i class="material-icons">add</i> {{__('admin.addMail')}}
+                    <i class="material-icons" >add</i> {{__('admin.addMail')}}
+                    <div class="ripple-container"></div>
+                </button>
+            @endcan
+            @can('import_excel_mail')  
+                <button style="float: right;cursor: not-allowed" class="btn btn-danger btn-round" style="text-transform: uppercase" disabled>
+                    <i class="material-icons">file_download</i> Import
                     <div class="ripple-container"></div>
                 </button>
             @endcan
             @can('export_excel_mail')  
                 <button style="float: right;cursor: not-allowed" class="btn btn-danger btn-round" style="text-transform: uppercase" disabled>
-                    <i class="material-icons">file_download</i> EXCEL
-                    <div class="ripple-container"></div>
-                </button>
-            @endcan
-            @can('export_pdf_mail')  
-                <button style="float: right;cursor: not-allowed" class="btn btn-danger btn-round" style="text-transform: uppercase" disabled>
-                    <i class="material-icons">file_download</i> PDF
+                    <i class="material-icons">file_download</i> Export
                     <div class="ripple-container"></div>
                 </button>
             @endcan
@@ -29,14 +29,14 @@
         
         <div class="card-body">
            <div class="table-responsive">
-            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+            <table class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width: 100%;">
               <thead>
                 <tr>
-                  <th class="text-center">{{__('admin.asunto')}}</th>
-                  <th class="text-center">{{__('admin.destinatario')}}</th>
+                  <th class="text-center">{{__('admin.subject')}}</th>
+                  <th class="text-center">{{__('admin.recipient')}}</th>
                   <th class="text-center">{{__('admin.body')}}</th>
                   <th class="text-center">{{__('admin.status')}}</th>
-                  <th class="text-center">{{__('common.options')}}</th>
+                  <th class="text-center">{{__('admin.options')}}</th>
                 </tr>
               </thead>
               <tbody>
@@ -59,8 +59,7 @@
                         @endcan
                       </td>
                     </tr>
-                @endforeach                                    
-                  
+                @endforeach                                                      
               </tbody>
             </table>
           </div>
@@ -69,17 +68,14 @@
     </div>
     <!--includes-->
     @include('livewire.modals.mails.create') 
-    @include('livewire.modals.mails.edit') 
     <!--endincludes-->
-</div>
-
-@push('js')
+    
   <script>
-
-        window.addEventListener('openCourierMailModal', event => { 
+        window.addEventListener('openMailCreateModal', event => { 
+                    alert('aqui');
             $('#createMail').modal('show');
         });
-        window.addEventListener('closeCourierMailModal', event => { 
+        window.addEventListener('closeMailCreateModal', event => { 
             $('#createMail').modal('hide');
             location.reload();
             notification('top','center',event.detail.message);
@@ -127,4 +123,6 @@
         }
 
   </script>
-@endpush
+    
+</div>
+
