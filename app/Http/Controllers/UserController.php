@@ -130,7 +130,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:8|confirmed',
             'email' => 'required|unique:users|max:255',
             'name' => 'required|max:100',
             'identifer' => 'required',
@@ -184,24 +184,43 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $validated = $request->validate([
-            'password' => 'required|min:6|confirmed',
-            'email' => 'required|unique:users|max:255',
-            'name' => 'required|max:100',
-            'identifer' => 'required',
-            'birth_date' => 'required',
-            'card_id' => 'required|max:11',
-        ]);        
-        
+        if($request->has('password')){
+            $validated = $request->validate([
+                'password' => 'required|min:8|confirmed',
+                'name' => 'required|max:100',
+                'identifer' => 'required',
+                'birth_date' => 'required',
+            ]);           
+        }else{
+            $validated = $request->validate([
+                'name' => 'required|max:100',
+                'identifer' => 'required',
+                'birth_date' => 'required',
+            ]);                       
+        }
+                
         $user = User::findOrFail($request->get('id'));
-        $user->update(
-        [
-            'name' => $request->name,
-            'identifer' => $request->identifier,
-            'mobile' => $request->mobile,
-            'birth_date' => $request->birth_date,
-            
-        ]);                         
+        
+        if($request->has('password')){
+            $user->update(
+            [
+                'name' => $request->name,
+                'identifer' => $request->identifer,
+                'mobile' => $request->mobile,
+                'birth_date' => $request->birth_date,
+                'role_id' => $request->role_id,
+                'password' => Hash::make($request->password),
+            ]);                         
+        }else{
+            $user->update(
+            [
+                'name' => $request->name,
+                'identifer' => $request->identifer,
+                'mobile' => $request->mobile,
+                'birth_date' => $request->birth_date,
+                'role_id' => $request->role_id,
+            ]);                                     
+        }    
 
         return Redirect::back();        
     }

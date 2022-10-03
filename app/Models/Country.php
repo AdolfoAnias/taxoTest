@@ -13,6 +13,7 @@ class Country extends Model implements Auditable
     use AuditableTrait;
     
     protected $fillable = [
+        'id',
         'name',
         'iso3',
         'iso2',

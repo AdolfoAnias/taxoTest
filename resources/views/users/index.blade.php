@@ -17,6 +17,7 @@
                     <th>Country</th>
                     <th>State</th>
                     <th>City</th>
+                    <th>Rol</th>
                     <th width="100px">Action</th>
                 </tr>
             </thead>
@@ -57,7 +58,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" readonly autocomplete="email">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -99,7 +100,7 @@
                             <label for="card_id" class="col-md-4 col-form-label text-md-right">{{ __('Card Id') }}</label>
 
                             <div class="col-md-6">
-                                <input id="card_id" type="text" class="form-control @error('card_id') is-invalid @enderror" name="card_id" value="{{ old('card_id') }}" autocomplete="card id" autofocus>
+                                <input id="card_id" type="text" class="form-control @error('card_id') is-invalid @enderror" name="card_id" value="{{ old('card_id') }}" readonly autocomplete="card id" autofocus>
 
                                 @error('card_id')
                                     <span class="invalid-feedback" role="alert">
@@ -156,7 +157,7 @@
                             <div class="col-md-6">
                                 <select class="form-control" style="height: 35px; overflow: auto" id="role_id" name="role_id" required>
                                     <option value=""></option>
-                                    <option value="1">Admin</option>
+                                    <option value="1" >Admin</option>
                                     <option value="2">User</option>
                                 </select>        
                             </div>
@@ -240,8 +241,8 @@
         $('#userDatatable').on('click', '.edit', e => {
             $("#userModal").modal({backdrop: 'static', keyboard: false, show: true});
             
-            let tr = $(e.target).closest('tr');
-            
+            let tr = $(e.target).closest('tr');           
+           
             // Asignar datos de modal desde TR o celdas específicas
             $('#id').val($(tr).find('td:eq(0)').text());
             $('#name').val($(tr).find('td:eq(1)').text());
@@ -250,7 +251,8 @@
             $('#mobile').val($(tr).find('td:eq(4)').text());
             $('#card_id').val($(tr).find('td:eq(5)').text());
             $('#birth_date').val($(tr).find('td:eq(6)').text());
-            $('#selectCountry').val($(tr).find('td:eq(7)').text());
+            $('#role_id').val($(tr).find('td:eq(10)').text());
+            //$('#selectCountry').val($(tr).find('td:eq(10)').text());
 //            $('#age').val($(tr).find('td:eq(7)').text());
   //          $('#city').val($(tr).find('td:eq(8)').text());            
         });              
@@ -321,6 +323,7 @@
                 {data: 'country', name: 'country'},
                 {data: 'state', name: 'state'},
                 {data: 'city', name: 'city'},
+                {data: 'role_id', name: 'role_id'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
