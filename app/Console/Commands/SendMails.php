@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MySendMail;
+use Illuminate\Support\Facades\Artisan;
 
 class SendMails extends Command
 {
@@ -38,16 +39,7 @@ class SendMails extends Command
      * @return int
      */
     public function handle()
-    {
-        $authUser = Auth::user();
-        
-        $user = [
-            'name' => $authUser->name,
-            'email' => $authUser->email,
-        ];
-
-        Mail::to('test@gmail.com')->send(new MySendMail($user));
-        
-      //  return 0;
+    {        
+      $command = Artisan::call('queue:work');  
     }
 }

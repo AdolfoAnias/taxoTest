@@ -48,20 +48,6 @@ class MailComponent extends Component
         $this->mail_id = $id;
         $this->dispatchBrowserEvent('mailRemove', ['title' => __('admin.remove_title'), 'message' => __('admin.remove_mail_message'), 'btn_accept' => __('admin.setting_accept_button')]);
    }
-
-   public function send() {
-        $authUser = auth()->user();
-        
-        $user = [
-            'name' => $authUser->name,
-            'email' => $authUser->email,
-        ];
-
-        Mail::to('test@gmail.com')->send(new MySendMail($user));
-     
-        $this->resetInputFields();
-        $this->dispatchBrowserEvent('closeMailCreateModal', ['type' => 'success'  , 'message' => 'Mail Sent Succesufully!']);
-   }
    
     public function refreshDatatable() {
         $this->dispatchBrowserEvent('refreshDatatable', ['componentName' => '#datatables']);
@@ -147,7 +133,7 @@ class MailComponent extends Component
             'email' => $authUser->email,
         ];
 
-        Mail::to('test@gmail.com')->send(new MySendMail($user));
+        Mail::to($this->recipient)->send(new MySendMail($user));
         
         $this->resetInputFields();
         $this->dispatchBrowserEvent('closeMailCreateModal', ['type' => 'success'  , 'message' => 'Mail Sent Succesufully!']);

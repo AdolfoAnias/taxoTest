@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login de Usuario</title>
 </head>
 <body>
     <h2>Welcome to Taxo Test System</h2>
