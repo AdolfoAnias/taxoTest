@@ -11,6 +11,7 @@ return [
     'addMail' => 'Add New Mail',        
     'addUser' => 'Add New User',        
     'send' => 'Send',    
+    'save' => 'Save',    
     'cancel' => 'Cancel',    
     'newMail' => 'Create New Mail',   
     'remove_title'=>'Are you sure?',

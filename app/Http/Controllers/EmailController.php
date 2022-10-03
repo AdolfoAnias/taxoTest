@@ -101,7 +101,6 @@ class EmailController extends Controller
     
     public function importExcel(Request $request)
     {
-        dd($request);
         (new EmailsImport)->import(request()->file('photo'));        
         
         $leadsImported = ImportExcel::all();

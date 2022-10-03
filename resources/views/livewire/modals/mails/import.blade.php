@@ -25,8 +25,8 @@
           <div class="modal-footer">
               <div class="form-check mr-auto">                
               </div>
-              <button type="submit" class="btn btn-rose">{{__('common.save')}}<div class="ripple-container"></div></button>
-              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">{{__('common.cancel')}}<div class="ripple-container"><div class="ripple-decorator ripple-on ripple-out" style="left: 34.0938px; top: 22px; background-color: rgb(244, 67, 54); transform: scale(8.44923);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 34.0938px; top: 22px; background-color: rgb(244, 67, 54); transform: scale(8.44923);"></div></div></button>            
+              <button type="submit" class="btn btn-rose">{{__('admin.save')}}<div class="ripple-container"></div></button>
+              <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">{{__('admin.cancel')}}<div class="ripple-container"><div class="ripple-decorator ripple-on ripple-out" style="left: 34.0938px; top: 22px; background-color: rgb(244, 67, 54); transform: scale(8.44923);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 34.0938px; top: 22px; background-color: rgb(244, 67, 54); transform: scale(8.44923);"></div></div></button>            
           </div>
         </form>  
       </div>
