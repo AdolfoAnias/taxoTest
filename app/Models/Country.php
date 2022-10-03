@@ -33,4 +33,9 @@ class Country extends Model implements Auditable
         'flag',
     ];
 
+    public function state()
+    {
+        return $this->hasMany(State::class);
+    }    
+    
 }

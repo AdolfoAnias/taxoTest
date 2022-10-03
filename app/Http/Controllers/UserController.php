@@ -36,14 +36,24 @@ class UserController extends Controller
             $data = User::select('*');
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('country', function($row){                         
+                        return $row->city->state->country->name;
+                    })                                                            
+                    ->addColumn('state', function($row){                         
+                        return $row->city->state->name;
+                    })                                        
+                    ->addColumn('city', function($row){                         
+                        return $row->city->name;
+                    })                    
                     ->addColumn('action', function($row){                         
                         return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
                     })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['action','country','state','country'])
                     ->make(true);
         }       
 
-        return view('users.index');
+        $countries = Country::all();        
+        return view('users.index', compact('countries'));
     }
 
     public function mail()

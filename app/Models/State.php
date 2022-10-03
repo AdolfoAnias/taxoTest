@@ -19,5 +19,15 @@ class State extends Model
         'longitude',
         'flag',
     ];
+
+    public function country()
+    {
+        return $this->belongsTo('App\Models\Country','country_id','id');
+    }
+
+    public function city()
+    {
+        return $this->hasMany(City::class);
+    }    
     
 }

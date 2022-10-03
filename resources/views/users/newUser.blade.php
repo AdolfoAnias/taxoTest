@@ -57,7 +57,7 @@
                                 <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="identifier" value="{{ old('identifier') }}" required autocomplete="mobile" autofocus onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
+                                    <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile" autofocus onKeypress="if (event.keyCode < 48 || event.keyCode > 57) event.returnValue = false;">
 
                                     @error('mobile')
                                         <span class="invalid-feedback" role="alert">
