@@ -85,7 +85,7 @@
                                 <label for="birth_date" class="col-md-4 col-form-label text-md-right">{{ __('Birth Date') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ old('birth_date') }}" autocomplete="birth date" autofocus>
+                                    <input id="birth_date" type="date" onchange="getAge(event);" class="form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ old('birth_date') }}" autocomplete="birth date" autofocus>
 
                                     @error('birth_date')
                                         <span class="invalid-feedback" role="alert">
@@ -158,7 +158,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button id="btnSubmit" type="submit" class="btn btn-primary">
                                         {{ __('Register') }}
                                     </button>
                                 </div>
@@ -207,6 +207,25 @@
                     document.getElementById("selectCity").innerHTML = opciones;
                 }).catch(error =>console.error(error));
             })
+
+            function getAge(e) {
+                var hoy = new Date();
+                var cumpleanos = new Date(e.target.value);
+                var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+                var m = hoy.getMonth() - cumpleanos.getMonth();
+
+                if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                    edad--;
+                }
+
+                if(edad < 18){
+                    alert('No puede ser menor de edad');
+                    document.getElementById('btnSubmit').disabled=true;
+                    document.getElementById("birth_date").focus();
+                }else{
+                    document.getElementById('btnSubmit').disabled=false;
+                }
+            }
 
         </script>
 
