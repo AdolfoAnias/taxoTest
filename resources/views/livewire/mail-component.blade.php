@@ -42,10 +42,10 @@
               <tbody>
                 @foreach($mails as $data)  
                     <tr>
-                      <td class="text-center">{{$data->asunto}}</td>
-                      <td class="text-center">{{$data->destinatario}}</td>
+                      <td class="text-center">{{$data->subject}}</td>
+                      <td class="text-center">{{$data->recipient}}</td>
                       <td class="text-center">{{$data->body }}</td>
-                      <td class="text-center">{{$data->status }}</td>
+                      <td class="text-center">{{$data->state }}</td>
                       <td class="td-actions text-center">
                         @can('update_mail')    
                             <button wire:click="selectAction({{$data->id}}, 'edit')" type="button" rel="tooltip" class="btn btn-success btn-round" title="">
@@ -62,6 +62,7 @@
                 @endforeach                                                      
               </tbody>
             </table>
+            {{ $mails->links() }}                     
           </div>
 
         </div>
@@ -72,7 +73,6 @@
     
   <script>
         window.addEventListener('openMailCreateModal', event => { 
-                    alert('aqui');
             $('#createMail').modal('show');
         });
         window.addEventListener('closeMailCreateModal', event => { 

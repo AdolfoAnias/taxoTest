@@ -11,6 +11,9 @@ return [
     'addMail' => 'Add New Mail',        
     'send' => 'Send',    
     'cancel' => 'Cancel',    
-    'newMail' => 'Create New Mail',    
+    'newMail' => 'Create New Mail',   
+    'remove_title'=>'Are you sure?',
+    'remove_mail_message'=>'The selected email will be removed. Do you want to continue?',
+    'setting_accept_button'=> 'Accept',    
 ];
 

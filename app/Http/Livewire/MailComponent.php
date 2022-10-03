@@ -8,6 +8,8 @@ use App\Models\Email;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MySendMail;
 
 class MailComponent extends Component
 {
@@ -20,7 +22,7 @@ class MailComponent extends Component
     
     public $page = 1;      
   
-    public $mail_id, $subject, $recipient, $body, $status, $modelId, $selectedItem;
+    public $mail_id, $subject, $recipient, $body, $state, $modelId, $selectedItem;
     public $excel;
    
     public $created_at, $updated_at;
@@ -37,8 +39,8 @@ class MailComponent extends Component
     ];
     
     protected $rules =[
-        'asunto'=>'required|filled',        
-        'destinatario'=>'required|filled',        
+        'subject'=>'required|filled',        
+        'recipient'=>'required|filled',        
         'body'=>'required|filled',        
     ];
 
@@ -47,6 +49,20 @@ class MailComponent extends Component
         $this->dispatchBrowserEvent('mailRemove', ['title' => __('admin.remove_title'), 'message' => __('admin.remove_mail_message'), 'btn_accept' => __('admin.setting_accept_button')]);
    }
 
+   public function send() {
+        $authUser = auth()->user();
+        
+        $user = [
+            'name' => $authUser->name,
+            'email' => $authUser->email,
+        ];
+
+        Mail::to('test@gmail.com')->send(new MySendMail($user));
+     
+        $this->resetInputFields();
+        $this->dispatchBrowserEvent('closeMailCreateModal', ['type' => 'success'  , 'message' => 'Mail Sent Succesufully!']);
+   }
+   
     public function refreshDatatable() {
         $this->dispatchBrowserEvent('refreshDatatable', ['componentName' => '#datatables']);
     }   
@@ -99,28 +115,39 @@ class MailComponent extends Component
         
         $model = Email::findOrFail($this->modelId);     
 
-        $this->asunto = $model->asunto;
-        $this->destinatario = $model->destinatario;
+        $this->subject = $model->subject;
+        $this->recipient = $model->recipient;
         $this->body = $model->body;        
+        $this->state = $model->state;        
     }
 
     public function resetInputFields(){
-        $this->asunto = '';
-        $this->destinatario = '';
+        $this->subject = '';
+        $this->recipient = '';
         $this->body = '';
+        $this->state = '';
         
         $this->resetErrorBag();        
     }
     
     public function store(){
-        $this->validate();               
-       
-        $data = [
-            'asunto' => $this->asunto,
-            'destinatario' => $this->destinatario,
+        $this->validate();  
+        
+        $authUser = Auth::user();
+        $mail = Email::create([
+            'subject' => $this->subject,
+            'recipient' => $this->recipient,
             'body' => $this->body,
-            'user_id' => $this->user_id,
-        ];                       
+            'user_id' => $authUser->id,
+            'state' => 'Not Sent',
+        ]);                       
+
+        $user = [
+            'name' => $authUser->name,
+            'email' => $authUser->email,
+        ];
+
+        Mail::to('test@gmail.com')->send(new MySendMail($user));
         
         $this->resetInputFields();
         $this->dispatchBrowserEvent('closeMailCreateModal', ['type' => 'success'  , 'message' => 'Mail Sent Succesufully!']);
@@ -128,10 +155,7 @@ class MailComponent extends Component
 
     public function edit(){                             
         $data = [
-            'asunto' => $this->asunto,
-            'destinatario' => $this->destinatario,
-            'body' => $this->body,
-            'user_id' => $this->user_id,
+            'state' => 'Sent',
         ];                 
         
         $this->resetInputFields();
@@ -148,7 +172,7 @@ class MailComponent extends Component
     
     public function delete() {
         if($this->mail_id != '' || $this->mail_id != null){
-
+            Email::find($this->mail_id)->delete();
 
             $this->resetInputFields();
             $this->dispatchBrowserEvent('closeMailDeleteModal', ['type' => 'success'  , 'message' => 'Mail Deleted Succesufully!']);

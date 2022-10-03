@@ -41,18 +41,17 @@
                
                 <div class="col-sm-12">
                   <div class="row">
-                    <label class="col-sm-3 col-form-label">{{__('admin.description')}}</label>  
+                    <label class="col-sm-3 col-form-label">{{__('admin.body')}}</label>  
                     <div class="col-md-9">
                       <div class="form-group" style="padding-bottom: 0px;">
-                        <input wire:model="description" type="text" class="form-control" id="description" required="true" aria-required="true" aria-invalid="true" autocomplete="off" />
-                        @error('description')
+                        <textarea wire:model="body" name="body" rows="4" cols="20" class="form-control"></textarea>
+                        @error('body')
                              <label class="error" >{{$message}}</label>
                         @enderror                        
                       </div>
                     </div>
                   </div>
-                </div>               
-               
+                </div>                             
                 
             </div>
           </div>

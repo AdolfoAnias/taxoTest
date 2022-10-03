@@ -12,8 +12,8 @@ class Email extends Model implements Auditable
     use HasFactory, AuditableTrait;
 
     protected $fillable = [
-        'asunto',
-        'destinatario',
+        'subject',
+        'recipient',
         'body',
         'state',
         'user_id',

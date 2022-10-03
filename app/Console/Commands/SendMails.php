@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MySendMail;
 
 class SendMails extends Command
 {
@@ -11,14 +13,14 @@ class SendMails extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'schedule:sentMail';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Sent Mails from Queue';
 
     /**
      * Create a new command instance.
@@ -37,6 +39,15 @@ class SendMails extends Command
      */
     public function handle()
     {
-        return 0;
+        $authUser = Auth::user();
+        
+        $user = [
+            'name' => $authUser->name,
+            'email' => $authUser->email,
+        ];
+
+        Mail::to('test@gmail.com')->send(new MySendMail($user));
+        
+      //  return 0;
     }
 }
