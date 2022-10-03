@@ -36,6 +36,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @livewireStyles
+    
+    <style>
+        .dropdown-menu {
+            width: 280px !important;
+        }   
+    </style>
 </head>
 <body>
     <div id="app">
@@ -97,8 +103,24 @@
                               <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ Auth::user()->name }}
                               </a>
-
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}:</label>
+
+                                        <div class="col-md-6">
+                                            <input id="name" type="text" class="form-control" name="name" value="{{ Auth::user()->email }}" readonly autocomplete="name" autofocus>
+                                        </div>
+                                    </div>    
+                                    <div class="form-group row">
+                                        <label for="Identifier" class="col-md-4 col-form-label text-md-right">{{ __('Identifier') }}:</label>
+
+                                        <div class="col-md-6">
+                                            <input id="name" type="text" class="form-control"  name="name" value="{{ Auth::user()->identifer }}" readonly autocomplete="name" autofocus>
+                                        </div>
+                                    </div>                                      
+                                </div>    
+                                <hr/>  
                                 <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                               </div>
                             </div>                                                
