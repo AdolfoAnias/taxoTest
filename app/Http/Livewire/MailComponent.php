@@ -75,13 +75,17 @@ class MailComponent extends Component
         if ($action == 'importMail') {
             $this->resetInputFields();
             $this->dispatchBrowserEvent('openImportMailModal', ['message' => '']);
-        }          
-       
+        }               
     }   
     
     public function render(Request $request)
     {
-        $data = Email::all();
+        $authUser = Auth::user();
+        if( $authUser->hasRole('Admin')){
+            $data = Email::all();
+        }else{
+            $data = Email::where('user_id',$authUser->id)->get();
+        }
         
         $currentPage = Paginator::resolveCurrentPage();
         $col = collect($data);
