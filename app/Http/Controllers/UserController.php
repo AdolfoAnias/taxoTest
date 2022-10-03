@@ -137,15 +137,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'password' => 'required|min:8|confirmed',
+        $rules = [
+            'password' => 'required|min:8|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,}$/',            
             'email' => 'required|unique:users|max:255',
             'name' => 'required|max:100',
             'identifer' => 'required',
             'birth_date' => 'required',
             'card_id' => 'required|max:11',
-        ]);        
+        ];
+        
+        $messages = [
+            'password.regex' => 'El password debe ser mínimo de 8 caracteres, contener al menos un número, una letra mayúscula y un carácter especial.',
+        ];        
+        
+        $this->validate($request, $rules, $messages);
 
+        
         //Guardar usando eloquent
 //        $user = User::create([
 //            'name' => $request->name,
