@@ -56,15 +56,21 @@
                     <!-- Left Side Of Navbar -->
                     @if (auth()->check())
                         <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users') }}">User Module</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('moduleMails') }}">Mail Module</a>
-                            </li>
+                            @can('view_management_user')  
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('users') }}">User Module</a>
+                                </li>
+                            @endcan
+                            @can('view_mails')  
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('moduleMails') }}">Mail Module</a>
+                                </li>
+                            @endcan
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('mail') }}">Send Mail</a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('usersFromApi') }}">Users From API</a>
                             </li>
