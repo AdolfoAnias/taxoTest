@@ -18,6 +18,7 @@
                     <th>State</th>
                     <th>City</th>
                     <th>Rol</th>
+                    <th>Age</th>
                     <th width="100px">Action</th>
                 </tr>
             </thead>
@@ -324,6 +325,7 @@
                 {data: 'state', name: 'state'},
                 {data: 'city', name: 'city'},
                 {data: 'role_id', name: 'role_id'},
+                {data: 'age', name: 'age'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });

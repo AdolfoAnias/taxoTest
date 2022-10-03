@@ -16,6 +16,7 @@ use Redirect;
 use App\Adapters\APIAdapters\WebAPI;
 use Illuminate\Support\Facades\Hash;
 use App\Contracts\IUserRepository;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -39,6 +40,10 @@ class UserController extends Controller
             $data = User::select('*');
             return Datatables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('age', function($row){                         
+                        $edad = Carbon::createFromDate($row->birth_date)->age; 
+                        return $edad; 
+                    })                                                                                
                     ->addColumn('country', function($row){                         
                         return $row->city->state->country->name;
                     })                                                            
@@ -51,7 +56,7 @@ class UserController extends Controller
                     ->addColumn('action', function($row){                         
                         return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
                     })
-                    ->rawColumns(['action','country','state','country'])
+                    ->rawColumns(['action','country','state','country','age'])
                     ->make(true);
         }       
 
@@ -141,6 +146,7 @@ class UserController extends Controller
             'card_id' => 'required|max:11',
         ]);        
 
+        //Guardar usando eloquent
 //        $user = User::create([
 //            'name' => $request->name,
 //            'email' => $request->email,
@@ -153,6 +159,7 @@ class UserController extends Controller
 //            'password' => Hash::make($request->password),
 //        ]);
 
+        //Guardar usando patron repositorio
         $data = [
             'name' => $request->name,
             'email' => $request->email,
