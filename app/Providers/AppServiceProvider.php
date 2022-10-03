@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('App\Contracts\IUserRepository', 'App\Repositories\UserRepository');
         $this->app->bind('WebAPI', 'App\Adapters\APIAdapters\WebAPI');
         $this->app->bind('App\Adapters\APIAdapters\WebAPI', function() {
             $cToken = new Client();

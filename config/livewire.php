@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => 'http://taxo.test',
+    'asset_url' => 'http://localhost/taxoTest/public',
 
     /*
     |--------------------------------------------------------------------------

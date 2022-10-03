@@ -1,11 +1,11 @@
 <!-- Modal -->
 
-<div class="modal fade" id="importMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true" wire:ignore.self data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="importMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true" data-backdrop="static">
    
 <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-            <form action="{{ route('home') }}" method="POST" id="RegisterValidation" novalidate="novalidate" enctype="multipart/form-data">
+            <form action="{{ route('importExcel') }}" method="POST" id="RegisterValidation" novalidate="novalidate" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                   <div class="card-header card-header-rose text-center" style="margin-top:-80px;">

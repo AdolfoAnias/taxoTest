@@ -24,7 +24,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('/import', [EmailController::class, 'importExcel'])->name('import');
+Route::post('/importExcel', [EmailController::class, 'importExcel'])->name('importExcel');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('mail', [UserController::class,'mail'])->name('mail');

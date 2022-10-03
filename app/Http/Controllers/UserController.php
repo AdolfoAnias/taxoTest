@@ -15,14 +15,17 @@ use Validator;
 use Redirect;
 use App\Adapters\APIAdapters\WebAPI;
 use Illuminate\Support\Facades\Hash;
+use App\Contracts\IUserRepository;
 
 class UserController extends Controller
 {
     protected $api;
+    protected $userRepo;
     
-    public function __construct(WebAPI $api)
+    public function __construct(WebAPI $api, IUserRepository $userRepo)
     {
         $this->api = $api;
+        $this->userRepo = $userRepo;
     }    
 
     /**
@@ -138,7 +141,19 @@ class UserController extends Controller
             'card_id' => 'required|max:11',
         ]);        
 
-        $user = User::create([
+//        $user = User::create([
+//            'name' => $request->name,
+//            'email' => $request->email,
+//            'identifer' => $request->identifer,
+//            'mobile' => $request->mobile,
+//            'birth_date' => $request->birth_date,
+//            'card_id' => $request->card_id,
+//            'city_id' => $request->city_id,
+//            'role_id' => $request->role_id,
+//            'password' => Hash::make($request->password),
+//        ]);
+
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
             'identifer' => $request->identifer,
@@ -148,8 +163,10 @@ class UserController extends Controller
             'city_id' => $request->city_id,
             'role_id' => $request->role_id,
             'password' => Hash::make($request->password),
-        ]);
-
+        ];
+        
+        $this->userRepo->create($data);
+        
         return redirect()->route('users');
     }
 
