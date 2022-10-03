@@ -24,6 +24,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('/import', [EmailController::class, 'importExcel'])->name('import');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('mail', [UserController::class,'mail'])->name('mail');
     
@@ -40,6 +42,6 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::post('getStates', [UserController::class, 'getStates'])->name('getStates');
     Route::post('getCity', [UserController::class, 'getCities'])->name('getCity');
-    
+       
     Route::get('/usersFromApi', [UserController::class, 'getUsersFromAPI'])->name('usersFromApi');
 });

@@ -72,9 +72,9 @@ class MailComponent extends Component
             $this->dispatchBrowserEvent('openMailEditModal');
         }
 
-        if ($action == 'importMail') {
+        if ($action == 'import') {
             $this->resetInputFields();
-            $this->dispatchBrowserEvent('openImportMailModal', ['message' => '']);
+            $this->dispatchBrowserEvent('openImportModal', ['message' => '']);
         }               
     }   
     

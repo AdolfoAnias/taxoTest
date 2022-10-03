@@ -64,9 +64,19 @@
     </div>
     <!--includes-->
     @include('livewire.modals.mails.create') 
+    @include('livewire.modals.mails.import') 
     <!--endincludes-->
     
   <script>
+        window.addEventListener('openImportModal', event => { 
+            $('#importMail').modal('show');
+        });
+        
+        window.addEventListener('closeImportModal', event => { 
+            $('#importMail').modal('hide');
+            notification('top','center',event.detail.type ,event.detail.message);
+        });
+      
         window.addEventListener('openMailCreateModal', event => { 
             $('#createMail').modal('show');
         });
