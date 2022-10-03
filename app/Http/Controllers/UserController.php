@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 use DataTables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MySendMail;
 use Session;
+use Validator;
 use Redirect;
 use App\Adapters\APIAdapters\WebAPI;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -19,7 +24,7 @@ class UserController extends Controller
     {
         $this->api = $api;
     }    
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +82,34 @@ class UserController extends Controller
 
         return view('users.usersFromApi');      
     }
+
+    public function createNewUser()
+    {
+        $countries = Country::all();
+        return view('users.newUser', compact('countries'));      
+    }
+
+    public function getStates(Request $request){
+        $states = State::where('country_id',$request->id)->get();
+
+         return response()->json(
+             [
+                 'lista' => $states,
+                 'success' => true
+             ]
+         );
+    }    
+
+    public function getCities(Request $request){
+        $city = City::where('state_id',$request->id)->get();
+
+         return response()->json(
+             [
+                 'lista' => $city,
+                 'success' => true
+             ]
+         );
+    }    
     
     /**
      * Store a newly created resource in storage.
@@ -86,7 +119,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'password' => 'required|min:6|confirmed',
+            'email' => 'required|unique:users|max:255',
+            'name' => 'required|max:100',
+            'identifer' => 'required',
+            'birth_date' => 'required',
+            'card_id' => 'required|max:11',
+        ]);        
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'identifer' => $request->identifer,
+            'mobile' => $request->mobile,
+            'birth_date' => $request->birth_date,
+            'card_id' => $request->card_id,
+            'city_id' => $request->city_id,
+            'role_id' => $request->role_id,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('users');
     }
 
     /**

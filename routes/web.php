@@ -29,12 +29,17 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::post('edit', [UserController::class,'update'])->name('edit');
     Route::post('delete.user/', [UserController::class,'destroy'])->name('delete.user');
+    Route::post('store.user/', [UserController::class,'store'])->name('store.user');
 
     Route::get('moduleUsers', 'userController@index')->name('moduleUsers');
     Route::get('moduleMails', [EmailController::class, 'index'])->name('moduleMails');
     
     Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::get('/newUser', [UserController::class, 'createNewUser'])->name('newUser');
     Route::get('/logout', [LoginController::class,'logout']);
+    
+    Route::post('getStates', [UserController::class, 'getStates'])->name('getStates');
+    Route::post('getCity', [UserController::class, 'getCities'])->name('getCity');
     
     Route::get('/usersFromApi', [UserController::class, 'getUsersFromAPI'])->name('usersFromApi');
 });

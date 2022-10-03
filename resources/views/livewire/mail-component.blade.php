@@ -14,7 +14,7 @@
                 </button>
             @endcan
             @can('import_excel_mail')  
-                <button style="float: right;cursor: not-allowed" class="btn btn-danger btn-round" style="text-transform: uppercase" disabled>
+                <button wire:click="selectAction('0', 'import')" style="float: right;" class="btn btn-danger btn-round" style="text-transform: uppercase">
                     <i class="material-icons">file_download</i> Import
                     <div class="ripple-container"></div>
                 </button>
@@ -47,11 +47,6 @@
                       <td class="text-center">{{$data->body }}</td>
                       <td class="text-center">{{$data->state }}</td>
                       <td class="td-actions text-center">
-                        @can('update_mail')    
-                            <button wire:click="selectAction({{$data->id}}, 'edit')" type="button" rel="tooltip" class="btn btn-success btn-round" title="">
-                              <i class="material-icons">edit</i>
-                            </button>
-                        @endcan    
                         @can('delete_mail')  
                             <button wire:click="openRemoveModal({{$data->id}})" type="button" rel="tooltip" class="btn btn-danger btn-round" title="">
                               <i class="material-icons">close</i>

@@ -39,6 +39,26 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">Country*</label>
+                            <div class="col-md-6">
+                                <select class="form-control" style="height: 35px; overflow: auto" id="selectCountry" name="selectCountry" required>
+                                    <option value=""></option>
+                                    @foreach($countries as $data) 
+                                        <option value="{{ $data->id }}">{{ $data->name}}</option>
+                                    @endforeach
+                                </select>        
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">State*</label>
+                            <div class="col-md-6">
+                                <select class="form-control" style="height: 35px; overflow: auto" id="selectState" name="selectState" required>
+                                </select>        
+                            </div>
+                        </div>
+                        
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -73,5 +93,28 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        document.getElementById('selectCountry').addEventListener('change',(e)=>{
+            fetch('getStates',{
+                method : 'POST',
+                body: JSON.stringify({id : e.target.value}),
+                headers:{
+                    'Content-Type': 'application/json',
+                    "X-CSRF-Token": '{{csrf_token()}}'
+                }
+            }).then(response =>{
+                return response.json()
+            }).then( data =>{                
+                var opciones ="<option value=''>Elegir</option>";
+                for (let i in data.lista) {
+                   opciones+= '<option value="'+data.lista[i].id+'">'+data.lista[i].municipality+'</option>';
+                }
+                document.getElementById("selectState").innerHTML = opciones;
+            }).catch(error =>console.error(error));
+        })
+        
+    </script>
+    
 </div>
 @endsection

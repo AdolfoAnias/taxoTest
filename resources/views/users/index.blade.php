@@ -3,6 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Users List</h1>
+        <a href="{{ route('newUser') }}" class="btn btn-primary"> {{__('admin.addUser')}} </a>
         <table id='userDatatable' class="table table-bordered data-table">
             <thead>
                 <tr>

@@ -9,6 +9,7 @@ return [
     'status' => 'Status',
     'options' => 'Options',    
     'addMail' => 'Add New Mail',        
+    'addUser' => 'Add New User',        
     'send' => 'Send',    
     'cancel' => 'Cancel',    
     'newMail' => 'Create New Mail',   
