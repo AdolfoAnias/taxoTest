@@ -15,18 +15,20 @@ class EmailController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $data = Email::select('*');
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){                         
-                        return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Resp</a>' . ' ' . '<a onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }       
+        return view('mail.index');
+        
+//        if ($request->ajax()) {
+//            $data = Email::select('*');
+//            return Datatables::of($data)
+//                    ->addIndexColumn()
+//                    ->addColumn('action', function($row){                         
+//                        return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Resp</a>' . ' ' . '<a onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+//                    })
+//                    ->rawColumns(['action'])
+//                    ->make(true);
+ //       }       
 
-        return view('mail.index');      
+       // return view('mail.index');      
     }
 
     /**
