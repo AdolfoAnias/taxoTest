@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('mail', [UserController::class,'mail'])->name('mail');
     
     Route::post('edit', [UserController::class,'update'])->name('edit');
-    Route::post('delete.user/', [UserController::class,'destroy'])->name('delete.user');
+    Route::post('delete.user/{id}', [UserController::class,'destroy'])->name('delete.user');
     Route::post('store.user/', [UserController::class,'store'])->name('store.user');
 
     Route::get('moduleUsers', 'userController@index')->name('moduleUsers');
