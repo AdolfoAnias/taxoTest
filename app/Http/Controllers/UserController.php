@@ -33,32 +33,37 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
             $data = User::select('*');
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('age', function($row){                         
-                        $edad = Carbon::createFromDate($row->birth_date)->age; 
-                        return $edad; 
-                    })                                                                                
-                    ->addColumn('country', function($row){                         
-                        return $row->city->state->country->name;
-                    })                                                            
-                    ->addColumn('state', function($row){                         
-                        return $row->city->state->name;
-                    })                                        
-                    ->addColumn('city', function($row){                         
-                        return $row->city->name;
-                    })                    
-                    ->addColumn('action', function($row){                         
-                        return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
-                    })
-                    ->rawColumns(['action','country','state','country','age'])
-                    ->make(true);
+            $this->getDatatable($data);
         }       
 
         $countries = Country::all();        
         return view('users.index', compact('countries'));
     }
 
+    public function getDatatable($data)
+    {
+        return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('age', function($row){                         
+                    $edad = Carbon::createFromDate($row->birth_date)->age; 
+                    return $edad; 
+                })                                                                                
+                ->addColumn('country', function($row){                         
+                    return $row->city->state->country->name;
+                })                                                            
+                ->addColumn('state', function($row){                         
+                    return $row->city->state->name;
+                })                                        
+                ->addColumn('city', function($row){                         
+                    return $row->city->name;
+                })                    
+                ->addColumn('action', function($row){                         
+                    return '<a href="#edit-'.$row->id.'" class="btn btn-xs btn-primary edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>' . ' ' . '<a onclick="deleteModal('.$row->id.')" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+                })
+                ->rawColumns(['action','country','state','country','age'])
+                ->make(true);
+    }   
+    
     public function mail()
     {
         $authUser = auth()->user();

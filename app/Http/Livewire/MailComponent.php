@@ -118,22 +118,14 @@ class MailComponent extends Component
     public function store(){
         $this->validate();  
         
-        $authUser = Auth::user();
         $mail = Email::create([
             'subject' => $this->subject,
             'recipient' => $this->recipient,
             'body' => $this->body,
-            'user_id' => $authUser->id,
+            'user_id' => Auth::user()->id,
             'state' => 'Not Sent',
         ]);                       
-
-        $user = [
-            'name' => $authUser->name,
-            'email' => $authUser->email,
-        ];
-
-        Mail::to($this->recipient)->send(new MySendMail($user));
-        
+       
         $this->resetInputFields();
         $this->dispatchBrowserEvent('closeMailCreateModal', ['type' => 'success'  , 'message' => 'Mail Sent Succesufully!']);
     }     
@@ -148,7 +140,6 @@ class MailComponent extends Component
     }
     
     public function importLeadsExcel(Request $request){ 
-        dd($this->excel);
         (new MailsImport)->import(request()->file('photo'));
             
         $this->resetInputFields();
