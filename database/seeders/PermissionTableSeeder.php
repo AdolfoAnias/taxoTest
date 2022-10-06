@@ -9,28 +9,11 @@ use App\Models\User;
 
 class PermissionTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
-    {   
-        Permission::create(['name' => 'view_management_user', 'parent_id' => 0]);
-        Permission::create(['name' => 'view_mails', 'parent_id' => 0]);
-        Permission::create(['name' => 'create_mail', 'parent_id' => 0]);
-        Permission::create(['name' => 'import_excel_mail', 'parent_id' => 0]);
-        Permission::create(['name' => 'export_excel_mail', 'parent_id' => 0]);
-        Permission::create(['name' => 'update_mail', 'parent_id' => 0]);
-        Permission::create(['name' => 'delete_mail', 'parent_id' => 0]);        
+    {           
+        $this->createPermissions();
+        $this->createRolesAndAssignPermissions();
         
-        $roleAdmin = Role::create(['name' => 'Admin','description' => 'This is the administration role']);
-        $roleUser = Role::create(['name' => 'User','description' => 'This is the creator role']);
-
-        $roleAdmin->givePermissionTo(Permission::all());
-        
-        $roleUser->givePermissionTo('view_mails');
-
         $user = User::create([
             'name' => 'Admin',
             'email' => 'admin@taxo.com',
@@ -41,7 +24,27 @@ class PermissionTableSeeder extends Seeder
             'password' => bcrypt('secret')
         ]);        
         
-        $user->assignRole('Admin');
-        
+        $user->assignRole('Admin');        
     }
+    
+    public function createPermissions()
+    {
+        Permission::create(['name' => 'view_management_user', 'parent_id' => 0]);
+        Permission::create(['name' => 'view_mails', 'parent_id' => 0]);
+        Permission::create(['name' => 'create_mail', 'parent_id' => 0]);
+        Permission::create(['name' => 'import_excel_mail', 'parent_id' => 0]);
+        Permission::create(['name' => 'export_excel_mail', 'parent_id' => 0]);
+        Permission::create(['name' => 'update_mail', 'parent_id' => 0]);
+        Permission::create(['name' => 'delete_mail', 'parent_id' => 0]);                
+    }        
+    
+    public function createRolesAndAssignPermissions()
+    {
+        $roleAdmin = Role::create(['name' => 'Admin','description' => 'This is the administration role']);
+        $roleUser = Role::create(['name' => 'User','description' => 'This is the creator role']);        
+
+        $roleAdmin->givePermissionTo(Permission::all());        
+        $roleUser->givePermissionTo('view_mails');        
+    }        
+    
 }

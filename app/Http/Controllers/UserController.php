@@ -29,11 +29,6 @@ class UserController extends Controller
         $this->userRepo = $userRepo;
     }    
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -79,16 +74,6 @@ class UserController extends Controller
         return Redirect::back();        
     }
     
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     public function getUsersFromAPI(Request $request)
     {
         if ($request->ajax()) {
@@ -109,33 +94,15 @@ class UserController extends Controller
 
     public function getStates(Request $request){
         $states = State::where('country_id',$request->id)->get();
-
-         return response()->json(
-             [
-                 'lista' => $states,
-                 'success' => true
-             ]
-         );
+        return response()->json(['lista' => $states,'success' => true]);
     }    
 
     public function getCities(Request $request){
         $city = City::where('state_id',$request->id)->get();
-
-         return response()->json(
-             [
-                 'lista' => $city,
-                 'success' => true
-             ]
-         );
+        return response()->json(['lista' => $city,'success' => true]);
     }    
-    
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function validateData(Request $request)
     {
         $rules = [
             'password' => 'required|min:8|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{3,}$/',            
@@ -146,27 +113,13 @@ class UserController extends Controller
             'card_id' => 'required|max:11',
         ];
         
-        $messages = [
-            'password.regex' => 'El password debe ser mínimo de 8 caracteres, contener al menos un número, una letra mayúscula y un carácter especial.',
-        ];        
+        $messages = ['password.regex' => 'El password debe ser mínimo de 8 caracteres, contener al menos un número, una letra mayúscula y un carácter especial.',];        
         
-        $this->validate($request, $rules, $messages);
-
-        
-        //Guardar usando eloquent
-//        $user = User::create([
-//            'name' => $request->name,
-//            'email' => $request->email,
-//            'identifer' => $request->identifer,
-//            'mobile' => $request->mobile,
-//            'birth_date' => $request->birth_date,
-//            'card_id' => $request->card_id,
-//            'city_id' => $request->city_id,
-//            'role_id' => $request->role_id,
-//            'password' => Hash::make($request->password),
-//        ]);
-
-        //Guardar usando patron repositorio
+        return $this->validate($request, $rules, $messages);        
+    }    
+    
+    public function store(Request $request)
+    {        
         $data = [
             'name' => $request->name,
             'email' => $request->email,
@@ -184,35 +137,6 @@ class UserController extends Controller
         return redirect()->route('users');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         if($request->has('password')){
@@ -231,10 +155,9 @@ class UserController extends Controller
         }
                 
         $user = User::findOrFail($request->get('id'));
-        
+
         if($request->has('password')){
-            $user->update(
-            [
+            $user->update([
                 'name' => $request->name,
                 'identifer' => $request->identifer,
                 'mobile' => $request->mobile,
@@ -243,8 +166,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ]);                         
         }else{
-            $user->update(
-            [
+            $user->update([
                 'name' => $request->name,
                 'identifer' => $request->identifer,
                 'mobile' => $request->mobile,
@@ -256,24 +178,11 @@ class UserController extends Controller
         return Redirect::back();        
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $id)
     {
         if(request()->ajax()){
             $model = User::where('id','=', $id)->delete();
-
-             return response()->json(
-                 [
-                     'success' => true
-                 ]
-             );
+            return response()->json(['success' => true]);
         }
-        
-        //return Redirect::back();        
     }
 }

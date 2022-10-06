@@ -22,13 +22,8 @@ class MailComponent extends Component
     
     public $page = 1;      
   
-    public $mail_id, $subject, $recipient, $body, $state, $modelId, $selectedItem;
-    public $excel;
-   
+    public $mail_id, $subject, $recipient, $body, $state, $excel, $modelId, $selectedItem;     
     public $created_at, $updated_at;
-
-    public $modal = false;
-    public $updateMode = false; 
 
     protected $paginationTheme = 'bootstrap';
 
@@ -80,13 +75,15 @@ class MailComponent extends Component
     
     public function render(Request $request)
     {
-        $authUser = Auth::user();
-        if( $authUser->hasRole('Admin')){
+        $data = Email::where('user_id',$authUser->id)->get();
+        if( Auth::user()->hasRole('Admin')){
             $data = Email::all();
-        }else{
-            $data = Email::where('user_id',$authUser->id)->get();
-        }
-        
+        }      
+                
+        return view('livewire.mail-component',['mails' => $this->setPaginator($data)]);       
+    }
+
+    public function setPaginator($data){
         $currentPage = Paginator::resolveCurrentPage();
         $col = collect($data);
         $perPage = 20;
@@ -95,9 +92,7 @@ class MailComponent extends Component
         $items->setPath(url('mail'));
         $items->appends($request->all());        
 
-        return view('livewire.mail-component',[
-            'mails' => $items,
-        ]);       
+        return $items;
     }
     
     public function getModelId($modelId){

@@ -5,8 +5,8 @@ namespace App\Helpers;
 use App\Adapters\APIAdapters\WebAPI;
 use Carbon\Carbon;
 
-class WebAPIHelper {
-
+class WebAPIHelper 
+{
     private $api;
 
     function __construct(WebAPI $api) {
@@ -16,5 +16,4 @@ class WebAPIHelper {
     public function getMails() {
         return $this->api->getMails();
     }
-
 }

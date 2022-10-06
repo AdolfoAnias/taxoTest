@@ -7,25 +7,20 @@ use App\Models\User;
 use Carbon\Carbon;
 
 class GeneralHelper
-{
-  
+{  
     public function generatePassWord(){           
-        $password = '';
-        
+        $password = '';        
         return $password;        
     }   
     
     public function validateUniqueEmail(){           
-        $email = true;
-        
+        $email = true;        
         return $email;        
     }   
 
     public function validateNotAdult(){           
-        $email = true;
-        
+        $email = true;        
         return $email;        
-    }   
-    
+    }      
 }
 

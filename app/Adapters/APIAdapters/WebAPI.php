@@ -19,7 +19,4 @@ class WebAPI {
         $data = json_decode($response);
         return $data;
     }
-
-
-
 }
